@@ -10,14 +10,14 @@
     background: #121212;
     color: #eee;
     margin: 0;
-    padding: 0;
+    padding: 2rem 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
   header {
-    padding: 2rem 1rem;
     text-align: center;
+    margin-bottom: 2rem;
   }
   header h1 {
     font-size: 3rem;
@@ -29,6 +29,7 @@
     font-size: 1.2rem;
     margin-top: 0.5rem;
     color: #66f0f8;
+    max-width: 600px;
   }
   section {
     width: 90%;
@@ -40,40 +41,30 @@
     padding-bottom: 0.5rem;
     margin-bottom: 1rem;
   }
-  .item {
-    background: #1f1f3d;
-    padding: 1rem;
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  li {
     margin-bottom: 1rem;
-    border-radius: 12px;
   }
-  .item a {
-    color: #00fff7;
-    text-decoration: none;
-    font-weight: bold;
+  input[type="text"] {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 10px;
+    border: none;
+    font-size: 1rem;
+    background: #1f1f3d;
+    color: #eee;
+    box-shadow: 0 0 8px #00fff7;
+    transition: background 0.3s ease;
   }
-  .social-links {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
+  input[type="text"]::placeholder {
+    color: #66f0f8;
   }
-  .social-links a {
-    color: #00fff7;
-    font-size: 2rem;
-    text-decoration: none;
-  }
-  footer {
-    padding: 1rem;
-    font-size: 0.9rem;
-    color: #555;
-  }
-  @media (max-width: 500px) {
-    header h1 {
-      font-size: 2.2rem;
-    }
-    .social-links a {
-      font-size: 1.5rem;
-    }
+  input[type="text"]:focus {
+    background: #0f0f1d;
+    outline: none;
   }
 </style>
 </head>
@@ -86,36 +77,14 @@
 
 <section>
   <h2>Hobbies & Projekte</h2>
-  <div class="item">
-    🎮 <strong>Gaming:</strong> GeoFS Simulator, Aerofly 4<br/>
-    <a href="https://geofs.com" target="_blank">GeoFS Website</a>
-  </div>
-  <div class="item">
-    💻 <strong>Coding:</strong> Swift, Webentwicklung<br/>
-    <a href="https://github.com/benni" target="_blank">Mein GitHub</a>
-  </div>
-  <div class="item">
-    🚲 <strong>Fahrrad-Touren:</strong> Viele Strecken in Bonn & Umgebung<br/>
-  </div>
-  <div class="item">
-    🎵 <strong>Musik:</strong> Trompete & Lieblingssongs<br/>
-    <a href="https://open.spotify.com/user/benni" target="_blank">Spotify Playlist</a>
-  </div>
+  <ul>
+    <li><input type="text" placeholder="Hier dein erster Punkt..." /></li>
+    <li><input type="text" placeholder="Hier dein zweiter Punkt..." /></li>
+    <li><input type="text" placeholder="Hier dein dritter Punkt..." /></li>
+    <li><input type="text" placeholder="Hier dein vierter Punkt..." /></li>
+    <li><input type="text" placeholder="Hier dein fünfter Punkt..." /></li>
+  </ul>
 </section>
-
-<section>
-  <h2>Social & Kontakt</h2>
-  <div class="social-links">
-    <a href="https://instagram.com/benni" target="_blank" aria-label="Instagram">📸</a>
-    <a href="https://tiktok.com/@benni" target="_blank" aria-label="TikTok">🎵</a>
-    <a href="https://discord.gg/benni" target="_blank" aria-label="Discord">💬</a>
-    <a href="mailto:benni@example.com" aria-label="E-Mail">📧</a>
-  </div>
-</section>
-
-<footer>
-  &copy; 2025 Benni. Alle Rechte vorbehalten.
-</footer>
 
 </body>
 </html>
