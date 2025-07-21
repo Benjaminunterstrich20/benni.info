@@ -1,19 +1,35 @@
-´<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Benni.info</title>
 <style>
+  /* Body mit Heftpapier-Hintergrund */
   body {
     font-family: Arial, sans-serif;
-    background: #121212;
-    color: #eee;
+    background: 
+      repeating-linear-gradient(
+        0deg, 
+        #fdfcf9 0, 
+        #fdfcf9 29px, 
+        #c7c1b7 30px, 
+        #fdfcf9 31px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        #f5f0e6 0,
+        #f5f0e6 39px,
+        #ded7ca 40px,
+        #f5f0e6 41px
+      );
+    color: #121212;
     margin: 0;
     padding: 2rem 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-height: 100vh;
   }
   header {
     text-align: center;
@@ -22,89 +38,114 @@
   header h1 {
     font-size: 3rem;
     margin: 0;
-    color: #00fff7;
-    text-shadow: 0 0 10px #00fff7;
+    color: #2e2a23;
   }
   header p {
     font-size: 1.2rem;
     margin-top: 0.5rem;
-    color: #66f0f8;
+    color: #4a463f;
     max-width: 600px;
   }
   section {
     width: 90%;
     max-width: 600px;
     margin-bottom: 2rem;
+    text-align: center;
+    background: rgba(255 255 255 / 0.85);
+    border-radius: 12px;
+    box-shadow: 0 0 8px rgb(0 0 0 / 0.1);
+    padding: 1.5rem 2rem;
   }
-  h2 {
-    border-bottom: 2px solid #00fff7;
-    padding-bottom: 0.5rem;
-    margin-bottom: 1rem;
+  button {
+    background: #795548;
+    color: #fdfcf9;
+    border: none;
+    border-radius: 8px;
+    padding: 0.8rem 1.5rem;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin: 0.5rem;
+  }
+  button:hover {
+    background: #5d4037;
+  }
+
+  /* Modal Basics */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+  }
+  .modal.active {
+    display: flex;
+  }
+  .modal-content {
+    background: #fbf8f1;
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    max-width: 500px;
+    width: 90%;
+    color: #3e342b;
+    text-align: left;
+    position: relative;
+    box-shadow: 0 0 10px rgb(0 0 0 / 0.15);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: 1px solid #dbd3c7;
+    /* Linien für Heft-Papier-Feeling im Modal */
+    background-image:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 28px,
+        #d2c9bb 29px,
+        transparent 30px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        #a1866f,
+        #a1866f 2px,
+        transparent 3px
+      );
+  }
+  .modal-content h3 {
+    margin-top: 0;
+    color: #795548;
+  }
+  .close-btn {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    color: #795548;
+    cursor: pointer;
   }
   ul {
     list-style: none;
-    padding: 0;
+    padding-left: 0;
   }
   li {
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
+    margin: 0.7rem 0;
     font-size: 1.1rem;
-  }
-  input[type="text"] {
-    flex: 1;
-    padding: 12px 15px;
-    border-radius: 10px;
-    border: none;
-    font-size: 1rem;
-    background: #1f1f3d;
-    color: #eee;
-    box-shadow: 0 0 8px #00fff7;
-    transition: background 0.3s ease;
-  }
-  input[type="text"]::placeholder {
-    color: #66f0f8;
-  }
-  input[type="text"]:focus {
-    background: #0f0f1d;
-    outline: none;
-  }
-  /* Social Section */
-  .social-container {
-    display: flex;
-    gap: 1.5rem;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 1rem;
-  }
-  .social-link, .social-text {
-    padding: 0.8rem 1.5rem;
-    border-radius: 12px;
-    font-weight: bold;
-    font-family: Arial, sans-serif;
     display: flex;
     align-items: center;
     gap: 0.6rem;
-    font-size: 1.1rem;
-    white-space: nowrap;
+  }
+  li span {
+    font-size: 1.3rem;
+  }
+  a.social-link {
+    color: #795548;
     text-decoration: none;
-    box-shadow: 0 0 10px;
-    cursor: pointer;
-    color: white;
   }
-  .discord {
-    background: #7289da;
-    box-shadow: 0 0 10px #7289da;
-  }
-  .signal {
-    background: #3a76f0;
-    box-shadow: 0 0 10px #3a76f0;
-  }
-  .whatsapp {
-    background: #25D366;
-    box-shadow: 0 0 10px #25D366;
-    cursor: default;
+  a.social-link:hover {
+    text-decoration: underline;
   }
 </style>
 </head>
@@ -116,31 +157,72 @@
 </header>
 
 <section>
-  <h2>Hobbies & Projekte</h2>
-  <ul>
-    <li><span>🎹</span><input type="text" placeholder="Klavier - dein erster Punkt..." /></li>
-    <li><span>✈️</span><input type="text" placeholder="Flugzeuge - dein zweiter Punkt..." /></li>
-    <li><span>💻</span><input type="text" placeholder="Coding - dein dritter Punkt..." /></li>
-    <li><span>🚲</span><input type="text" placeholder="Fahrrad - dein vierter Punkt..." /></li>
-    <li><span>🎵</span><input type="text" placeholder="Musik - dein fünfter Punkt..." /></li>
-  </ul>
+  <button id="openHobbies">Hobbies & Projekte zeigen</button>
+  <button id="openSocial">Social & Kontakt zeigen</button>
 </section>
 
-<section>
-  <h2>Social & Kontakt</h2>
-  <div class="social-container">
-    <a href="https://discord.com/users/bm08" target="_blank" class="social-link discord">
-      <span>💬</span> Discord: bm08
-    </a>
-    <a href="sms:+49XXXXXXXXXX" target="_blank" class="social-link signal">
-      <span>📲</span> Signal: benni_08.20
-    </a>
-    <div class="social-text whatsapp">
-      <span>📱</span> WhatsApp: &lt;frei&gt;
-    </div>
+<!-- Modal Hobbies -->
+<div id="modalHobbies" class="modal" role="dialog" aria-modal="true" aria-labelledby="hobbiesTitle">
+  <div class="modal-content">
+    <button class="close-btn" aria-label="Schließen">&times;</button>
+    <h3 id="hobbiesTitle">Hobbies & Projekte</h3>
+    <ul>
+      <li><span>🎹</span> Klavier - dein erster Punkt...</li>
+      <li><span>✈️</span> Flugzeuge - dein zweiter Punkt...</li>
+      <li><span>💻</span> Coding - dein dritter Punkt...</li>
+      <li><span>🚲</span> Fahrrad - dein vierter Punkt...</li>
+      <li><span>🎵</span> Musik - dein fünfter Punkt...</li>
+    </ul>
   </div>
-</section>
+</div>
+
+<!-- Modal Social -->
+<div id="modalSocial" class="modal" role="dialog" aria-modal="true" aria-labelledby="socialTitle">
+  <div class="modal-content">
+    <button class="close-btn" aria-label="Schließen">&times;</button>
+    <h3 id="socialTitle">Social & Kontakt</h3>
+    <ul>
+      <li>💬 <a href="https://discord.com/users/bm08" target="_blank" rel="noopener noreferrer" class="social-link">Discord: bm08</a></li>
+      <li>📲 Signal: benni_08.20</li>
+      <li>📱 WhatsApp: &lt;frei&gt;</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  const openHobbiesBtn = document.getElementById('openHobbies');
+  const openSocialBtn = document.getElementById('openSocial');
+  const modalHobbies = document.getElementById('modalHobbies');
+  const modalSocial = document.getElementById('modalSocial');
+
+  openHobbiesBtn.addEventListener('click', () => {
+    modalHobbies.classList.add('active');
+  });
+  openSocialBtn.addEventListener('click', () => {
+    modalSocial.classList.add('active');
+  });
+
+  document.querySelectorAll('.close-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.target.closest('.modal').classList.remove('active');
+    });
+  });
+
+  [modalHobbies, modalSocial].forEach(modal => {
+    modal.addEventListener('click', e => {
+      if (e.target === modal) {
+        modal.classList.remove('active');
+      }
+    });
+  });
+
+  window.addEventListener('keydown', e => {
+    if (e.key === "Escape") {
+      modalHobbies.classList.remove('active');
+      modalSocial.classList.remove('active');
+    }
+  });
+</script>
 
 </body>
 </html>
-
