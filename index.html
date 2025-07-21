@@ -6,7 +6,7 @@
 <title>Benni.info</title>
 <style>
   body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: Arial, sans-serif;
     background: #121212;
     color: #eee;
     margin: 0;
@@ -47,9 +47,13 @@
   }
   li {
     margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 1.1rem;
   }
   input[type="text"] {
-    width: 100%;
+    flex: 1;
     padding: 12px 15px;
     border-radius: 10px;
     border: none;
@@ -66,6 +70,9 @@
     background: #0f0f1d;
     outline: none;
   }
+  .emoji {
+    font-size: 1.5rem;
+  }
 </style>
 </head>
 <body>
@@ -78,11 +85,11 @@
 <section>
   <h2>Hobbies & Projekte</h2>
   <ul>
-    <li><input type="text" placeholder="Hier dein erster Punkt..." /></li>
-    <li><input type="text" placeholder="Hier dein zweiter Punkt..." /></li>
-    <li><input type="text" placeholder="Hier dein dritter Punkt..." /></li>
-    <li><input type="text" placeholder="Hier dein vierter Punkt..." /></li>
-    <li><input type="text" placeholder="Hier dein fünfter Punkt..." /></li>
+    <li><span class="emoji">🎹</span><input type="text" placeholder="Klavier - dein erster Punkt..." /></li>
+    <li><span class="emoji">✈️</span><input type="text" placeholder="Flugzeuge - dein zweiter Punkt..." /></li>
+    <li><span class="emoji">💻</span><input type="text" placeholder="Coding - dein dritter Punkt..." /></li>
+    <li><span class="emoji">🚲</span><input type="text" placeholder="Fahrrad - dein vierter Punkt..." /></li>
+    <li><span class="emoji">🎵</span><input type="text" placeholder="Musik - dein fünfter Punkt..." /></li>
   </ul>
 </section>
 
