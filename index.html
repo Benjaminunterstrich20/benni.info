@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Benni.info</title>
 <style>
-  /* Body mit Heftpapier-Hintergrund */
   body {
     font-family: Arial, sans-serif;
     background: 
@@ -84,6 +83,19 @@
   .modal.active {
     display: flex;
   }
+  
+  /* Slide-down Animation */
+  @keyframes slideDown {
+    0% {
+      transform: translateY(-200px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
   .modal-content {
     background: #fbf8f1;
     padding: 1.5rem 2rem;
@@ -96,7 +108,6 @@
     box-shadow: 0 0 10px rgb(0 0 0 / 0.15);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     border: 1px solid #dbd3c7;
-    /* Linien für Heft-Papier-Feeling im Modal */
     background-image:
       repeating-linear-gradient(
         0deg,
@@ -111,7 +122,23 @@
         #a1866f 2px,
         transparent 3px
       );
+    animation: slideDown 0.4s ease forwards;
   }
+  .modal-content.closing {
+    animation: slideUp 0.3s ease forwards;
+  }
+  
+  @keyframes slideUp {
+    0% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-200px);
+      opacity: 0;
+    }
+  }
+
   .modal-content h3 {
     margin-top: 0;
     color: #795548;
@@ -140,12 +167,9 @@
   li span {
     font-size: 1.3rem;
   }
-  a.social-link {
+  /* Social Text (kein Link) */
+  .social-text {
     color: #795548;
-    text-decoration: none;
-  }
-  a.social-link:hover {
-    text-decoration: underline;
   }
 </style>
 </head>
@@ -182,9 +206,9 @@
     <button class="close-btn" aria-label="Schließen">&times;</button>
     <h3 id="socialTitle">Social & Kontakt</h3>
     <ul>
-      <li>💬 <a href="https://discord.com/users/bm08" target="_blank" rel="noopener noreferrer" class="social-link">Discord: bm08</a></li>
-      <li>📲 Signal: benni_08.20</li>
-      <li>📱 WhatsApp: &lt;frei&gt;</li>
+      <li class="social-text">💬 Discord: bm08</li>
+      <li class="social-text">📲 Signal: benni_08.20</li>
+      <li class="social-text">📱 WhatsApp: &lt;frei&gt;</li>
     </ul>
   </div>
 </div>
@@ -195,31 +219,39 @@
   const modalHobbies = document.getElementById('modalHobbies');
   const modalSocial = document.getElementById('modalSocial');
 
-  openHobbiesBtn.addEventListener('click', () => {
-    modalHobbies.classList.add('active');
-  });
-  openSocialBtn.addEventListener('click', () => {
-    modalSocial.classList.add('active');
-  });
+  function openModal(modal) {
+    modal.classList.add('active');
+    const content = modal.querySelector('.modal-content');
+    content.classList.remove('closing');
+  }
+  function closeModal(modal) {
+    const content = modal.querySelector('.modal-content');
+    content.classList.add('closing');
+    content.addEventListener('animationend', () => {
+      modal.classList.remove('active');
+      content.classList.remove('closing');
+    }, { once: true });
+  }
+
+  openHobbiesBtn.addEventListener('click', () => openModal(modalHobbies));
+  openSocialBtn.addEventListener('click', () => openModal(modalSocial));
 
   document.querySelectorAll('.close-btn').forEach(btn => {
-    btn.addEventListener('click', e => {
-      e.target.closest('.modal').classList.remove('active');
-    });
+    btn.addEventListener('click', e => closeModal(e.target.closest('.modal')));
   });
 
   [modalHobbies, modalSocial].forEach(modal => {
     modal.addEventListener('click', e => {
       if (e.target === modal) {
-        modal.classList.remove('active');
+        closeModal(modal);
       }
     });
   });
 
   window.addEventListener('keydown', e => {
     if (e.key === "Escape") {
-      modalHobbies.classList.remove('active');
-      modalSocial.classList.remove('active');
+      closeModal(modalHobbies);
+      closeModal(modalSocial);
     }
   });
 </script>
