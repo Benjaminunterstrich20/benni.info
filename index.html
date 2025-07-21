@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Benni.info</title>
+<title>Benni.info - Balken-Rollo</title>
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -25,14 +25,15 @@
     color: #121212;
     margin: 0;
     padding: 2rem 1rem;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
-    min-height: 100vh;
   }
   header {
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
   }
   header h1 {
     font-size: 3rem;
@@ -45,126 +46,71 @@
     color: #4a463f;
     max-width: 600px;
   }
-  section {
-    width: 90%;
-    max-width: 600px;
-    margin-bottom: 2rem;
-    text-align: center;
-    background: rgba(255 255 255 / 0.85);
-    border-radius: 12px;
-    box-shadow: 0 0 8px rgb(0 0 0 / 0.1);
-    padding: 1.5rem 2rem;
-  }
-  button {
+  /* Der Balken */
+  #rollerBar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 50px; /* Anfangshöhe */
     background: #795548;
     color: #fdfcf9;
-    border: none;
-    border-radius: 8px;
-    padding: 0.8rem 1.5rem;
-    font-size: 1.1rem;
     cursor: pointer;
-    transition: background 0.3s ease;
-    margin: 0.5rem;
-  }
-  button:hover {
-    background: #5d4037;
-  }
-  /* Modal Basics */
-  .modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0; top: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.6);
-    justify-content: center;
-    align-items: center;
-  }
-  .modal.active {
+    transition: height 0.5s ease;
     display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    user-select: none;
   }
-  /* Slide-down Animation */
-  @keyframes slideDown {
-    0% {
-      transform: translateY(-200px);
-      opacity: 0;
-    }
-    100% {
-      transform: translateY(0);
-      opacity: 1;
-    }
+  #rollerBar.expanded {
+    height: 250px; /* Höhe nach dem Rollo */
+    padding: 1rem 3rem;
   }
-  .modal-content {
-    background: #fbf8f1;
-    padding: 1.5rem 2rem;
-    border-radius: 12px;
-    max-width: 500px;
-    width: 90%;
-    color: #3e342b;
-    text-align: left;
-    position: relative;
-    box-shadow: 0 0 10px rgb(0 0 0 / 0.15);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    border: 1px solid #dbd3c7;
-    background-image:
-      repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 28px,
-        #d2c9bb 29px,
-        transparent 30px
-      ),
-      repeating-linear-gradient(
-        90deg,
-        #a1866f,
-        #a1866f 2px,
-        transparent 3px
-      );
-    animation: slideDown 0.4s ease forwards;
+  /* Container für die 3 Bereiche */
+  #contentWrapper {
+    display: none;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    color: #fdfcf9;
   }
-  .modal-content.closing {
-    animation: slideUp 0.3s ease forwards;
+  #rollerBar.expanded #contentWrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
   }
-  @keyframes slideUp {
-    0% {
-      transform: translateY(0);
-      opacity: 1;
-    }
-    100% {
-      transform: translateY(-200px);
-      opacity: 0;
-    }
+  /* Jede Spalte */
+  .column {
+    flex: 1;
+    background: rgba(0,0,0,0.2);
+    border-radius: 10px;
+    padding: 1rem;
+    font-size: 0.9rem;
   }
-  .modal-content h3 {
+  .column h3 {
     margin-top: 0;
-    color: #795548;
+    color: #ffcc80;
+    font-weight: bold;
+    margin-bottom: 0.8rem;
   }
-  .close-btn {
-    position: absolute;
-    top: 12px;
-    right: 15px;
-    background: transparent;
-    border: none;
-    font-size: 1.5rem;
-    color: #795548;
-    cursor: pointer;
-  }
-  ul {
+  .column ul {
     list-style: none;
     padding-left: 0;
+    margin: 0;
   }
-  li {
-    margin: 0.7rem 0;
-    font-size: 1.1rem;
+  .column ul li {
+    margin: 0.6rem 0;
     display: flex;
     align-items: center;
-    gap: 0.6rem;
+    gap: 0.5rem;
   }
-  li span {
+  .column ul li span {
     font-size: 1.3rem;
   }
-  /* Social Text (kein Link) */
-  .social-text {
-    color: #795548;
+  /* Hover-Effect Balken */
+  #rollerBar:hover {
+    background: #5d4037;
   }
 </style>
 </head>
@@ -175,98 +121,61 @@
   <p>Der Typ, der mehr fliegt als läuft, mehr tippt als redet und mehr rockt als chillt. Willkommen in meiner digitalen Welt — wo Tasten klirren, Motoren brummen und Ideen abheben.</p>
 </header>
 
-<section>
-  <button id="openHobbies">Hobbies & Projekte zeigen</button>
-  <button id="openSocial">Social & Kontakt zeigen</button>
-  <button id="openShare">Dinge teilen</button>
-</section>
-
-<!-- Modal Hobbies -->
-<div id="modalHobbies" class="modal" role="dialog" aria-modal="true" aria-labelledby="hobbiesTitle">
-  <div class="modal-content">
-    <button class="close-btn" aria-label="Schließen">&times;</button>
-    <h3 id="hobbiesTitle">Hobbies & Projekte</h3>
-    <ul>
-      <li><span>🎹</span> Klavier - dein erster Punkt...</li>
-      <li><span>✈️</span> Flugzeuge - dein zweiter Punkt...</li>
-      <li><span>💻</span> Coding - dein dritter Punkt...</li>
-      <li><span>🚲</span> Fahrrad - dein vierter Punkt...</li>
-      <li><span>🎵</span> Musik - dein fünfter Punkt...</li>
-    </ul>
+<div id="rollerBar" aria-expanded="false" role="button" tabindex="0" aria-label="Balken öffnen und schließen">
+  <div id="contentWrapper">
+    <div class="column" id="hobbiesCol">
+      <h3>🎹 Hobbies & Projekte</h3>
+      <ul>
+        <li><span>🎹</span> Klavier - dein erster Punkt...</li>
+        <li><span>✈️</span> Flugzeuge - dein zweiter Punkt...</li>
+        <li><span>💻</span> Coding - dein dritter Punkt...</li>
+        <li><span>🚲</span> Fahrrad - dein vierter Punkt...</li>
+        <li><span>🎵</span> Musik - dein fünfter Punkt...</li>
+      </ul>
+    </div>
+    <div class="column" id="socialCol">
+      <h3>💬 Social & Kontakt</h3>
+      <ul>
+        <li>Discord: bm08</li>
+        <li>Signal: benni_08.20</li>
+        <li>WhatsApp: &lt;frei&gt;</li>
+      </ul>
+    </div>
+    <div class="column" id="shareCol">
+      <h3>🔥 Dinge teilen</h3>
+      <ul>
+        <li>🚀 Cooles Tutorial: https://example.com/tutorial</li>
+        <li>🎧 Lieblings-Playlist: https://example.com/playlist</li>
+        <li>📚 Buch: „Tech Hacks für Anfänger“</li>
+        <li>🛠️ Tools: Code-Editor XYZ</li>
+        <li>🔥 Projekt: Benni.info</li>
+      </ul>
+    </div>
   </div>
-</div>
-
-<!-- Modal Social -->
-<div id="modalSocial" class="modal" role="dialog" aria-modal="true" aria-labelledby="socialTitle">
-  <div class="modal-content">
-    <button class="close-btn" aria-label="Schließen">&times;</button>
-    <h3 id="socialTitle">Social & Kontakt</h3>
-    <ul>
-      <li class="social-text">💬 Discord: bm08</li>
-      <li class="social-text">📲 Signal: benni_08.20</li>
-      <li class="social-text">📱 WhatsApp: &lt;frei&gt;</li>
-    </ul>
-  </div>
-</div>
-
-<!-- Modal Share -->
-<div id="modalShare" class="modal" role="dialog" aria-modal="true" aria-labelledby="shareTitle">
-  <div class="modal-content">
-    <button class="close-btn" aria-label="Schließen">&times;</button>
-    <h3 id="shareTitle">Dinge, die ich teilen will</h3>
-    <ul>
-      <li>🚀 Cooles Tutorial: https://example.com/tutorial</li>
-      <li>🎧 Meine Lieblings-Playlist: https://example.com/playlist</li>
-      <li>📚 Spannendes Buch: „Tech Hacks für Anfänger“</li>
-      <li>🛠️ Nützliche Tools: Code-Editor XYZ, Grafiktool ABC</li>
-      <li>🔥 Mein aktuelles Projekt: Benni.info</li>
-    </ul>
-  </div>
+  <span id="rollerLabel">↑ Klick zum Öffnen</span>
 </div>
 
 <script>
-  const openHobbiesBtn = document.getElementById('openHobbies');
-  const openSocialBtn = document.getElementById('openSocial');
-  const openShareBtn = document.getElementById('openShare');
-  const modalHobbies = document.getElementById('modalHobbies');
-  const modalSocial = document.getElementById('modalSocial');
-  const modalShare = document.getElementById('modalShare');
+  const rollerBar = document.getElementById('rollerBar');
+  const contentWrapper = document.getElementById('contentWrapper');
+  const rollerLabel = document.getElementById('rollerLabel');
 
-  function openModal(modal) {
-    modal.classList.add('active');
-    const content = modal.querySelector('.modal-content');
-    content.classList.remove('closing');
-  }
-  function closeModal(modal) {
-    const content = modal.querySelector('.modal-content');
-    content.classList.add('closing');
-    content.addEventListener('animationend', () => {
-      modal.classList.remove('active');
-      content.classList.remove('closing');
-    }, { once: true });
-  }
-
-  openHobbiesBtn.addEventListener('click', () => openModal(modalHobbies));
-  openSocialBtn.addEventListener('click', () => openModal(modalSocial));
-  openShareBtn.addEventListener('click', () => openModal(modalShare));
-
-  document.querySelectorAll('.close-btn').forEach(btn => {
-    btn.addEventListener('click', e => closeModal(e.target.closest('.modal')));
+  rollerBar.addEventListener('click', () => {
+    rollerBar.classList.toggle('expanded');
+    const expanded = rollerBar.classList.contains('expanded');
+    rollerBar.setAttribute('aria-expanded', expanded);
+    if(expanded){
+      rollerLabel.textContent = '↓ Klick zum Schließen';
+    } else {
+      rollerLabel.textContent = '↑ Klick zum Öffnen';
+    }
   });
 
-  [modalHobbies, modalSocial, modalShare].forEach(modal => {
-    modal.addEventListener('click', e => {
-      if (e.target === modal) {
-        closeModal(modal);
-      }
-    });
-  });
-
-  window.addEventListener('keydown', e => {
-    if (e.key === "Escape") {
-      closeModal(modalHobbies);
-      closeModal(modalSocial);
-      closeModal(modalShare);
+  // Accessibility: Enter und Space zum toggeln
+  rollerBar.addEventListener('keydown', e => {
+    if(e.key === 'Enter' || e.key === ' '){
+      e.preventDefault();
+      rollerBar.click();
     }
   });
 </script>
