@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Benni.info - Balken-Rollo</title>
+<title>Benni.info – Einzelne Rollo-Balken</title>
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -28,12 +28,11 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
     align-items: center;
   }
   header {
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
   }
   header h1 {
     font-size: 3rem;
@@ -46,71 +45,79 @@
     color: #4a463f;
     max-width: 600px;
   }
-  /* Der Balken */
-  #rollerBar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100vw;
-    height: 50px; /* Anfangshöhe */
+
+  /* Container für Balken */
+  #balkenContainer {
+    width: 100%;
+    max-width: 700px;
+  }
+
+  /* Einzelner Balken (Button) */
+  .rollo-button {
+    width: 100%;
     background: #795548;
     color: #fdfcf9;
+    border: none;
+    border-radius: 8px 8px 0 0;
+    padding: 1rem 1.5rem;
+    font-size: 1.2rem;
+    font-weight: bold;
     cursor: pointer;
-    transition: height 0.5s ease;
+    text-align: left;
+    position: relative;
+    user-select: none;
+    box-shadow: 0 3px 6px rgb(0 0 0 / 0.15);
     display: flex;
     align-items: center;
-    justify-content: center;
-    z-index: 2000;
-    user-select: none;
+    gap: 0.8rem;
   }
-  #rollerBar.expanded {
-    height: 250px; /* Höhe nach dem Rollo */
-    padding: 1rem 3rem;
+  .rollo-button:hover {
+    background: #5d4037;
   }
-  /* Container für die 3 Bereiche */
-  #contentWrapper {
-    display: none;
-    width: 100%;
-    max-width: 1000px;
-    margin: 0 auto;
-    color: #fdfcf9;
+  /* Pfeil nach rechts/oben für toggle */
+  .rollo-button::after {
+    content: "▶";
+    position: absolute;
+    right: 1.2rem;
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
   }
-  #rollerBar.expanded #contentWrapper {
-    display: flex;
-    justify-content: space-between;
-    gap: 2rem;
+  .rollo-button.active::after {
+    transform: rotate(90deg);
   }
-  /* Jede Spalte */
-  .column {
-    flex: 1;
-    background: rgba(0,0,0,0.2);
-    border-radius: 10px;
-    padding: 1rem;
-    font-size: 0.9rem;
+
+  /* Der ausklappbare Inhalt */
+  .rollo-content {
+    max-height: 0;
+    overflow: hidden;
+    background: #fbf8f1;
+    border: 1px solid #dbd3c7;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    color: #3e342b;
+    box-shadow: 0 0 10px rgb(0 0 0 / 0.1);
+    transition: max-height 0.4s ease;
+    padding: 0 1.5rem;
   }
-  .column h3 {
-    margin-top: 0;
-    color: #ffcc80;
-    font-weight: bold;
-    margin-bottom: 0.8rem;
+  .rollo-content.open {
+    padding: 1rem 1.5rem;
+    max-height: 400px; /* genug Platz für den Inhalt */
   }
-  .column ul {
+  /* Listen */
+  ul {
     list-style: none;
     padding-left: 0;
     margin: 0;
   }
-  .column ul li {
+  li {
     margin: 0.6rem 0;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.6rem;
+    font-size: 1rem;
   }
-  .column ul li span {
+  li span {
     font-size: 1.3rem;
-  }
-  /* Hover-Effect Balken */
-  #rollerBar:hover {
-    background: #5d4037;
   }
 </style>
 </head>
@@ -121,62 +128,66 @@
   <p>Der Typ, der mehr fliegt als läuft, mehr tippt als redet und mehr rockt als chillt. Willkommen in meiner digitalen Welt — wo Tasten klirren, Motoren brummen und Ideen abheben.</p>
 </header>
 
-<div id="rollerBar" aria-expanded="false" role="button" tabindex="0" aria-label="Balken öffnen und schließen">
-  <div id="contentWrapper">
-    <div class="column" id="hobbiesCol">
-      <h3>🎹 Hobbies & Projekte</h3>
-      <ul>
-        <li><span>🎹</span> Klavier - dein erster Punkt...</li>
-        <li><span>✈️</span> Flugzeuge - dein zweiter Punkt...</li>
-        <li><span>💻</span> Coding - dein dritter Punkt...</li>
-        <li><span>🚲</span> Fahrrad - dein vierter Punkt...</li>
-        <li><span>🎵</span> Musik - dein fünfter Punkt...</li>
-      </ul>
-    </div>
-    <div class="column" id="socialCol">
-      <h3>💬 Social & Kontakt</h3>
-      <ul>
-        <li>Discord: bm08</li>
-        <li>Signal: benni_08.20</li>
-        <li>WhatsApp: &lt;frei&gt;</li>
-      </ul>
-    </div>
-    <div class="column" id="shareCol">
-      <h3>🔥 Dinge teilen</h3>
-      <ul>
-        <li>🚀 Cooles Tutorial: https://example.com/tutorial</li>
-        <li>🎧 Lieblings-Playlist: https://example.com/playlist</li>
-        <li>📚 Buch: „Tech Hacks für Anfänger“</li>
-        <li>🛠️ Tools: Code-Editor XYZ</li>
-        <li>🔥 Projekt: Benni.info</li>
-      </ul>
-    </div>
+<div id="balkenContainer">
+  <button class="rollo-button" aria-expanded="false" aria-controls="hobbiesContent" id="btnHobbies">
+    🎹 Hobbies & Projekte
+  </button>
+  <div class="rollo-content" id="hobbiesContent" role="region" aria-labelledby="btnHobbies">
+    <ul>
+      <li><span>🎹</span> Klavier - dein erster Punkt...</li>
+      <li><span>✈️</span> Flugzeuge - dein zweiter Punkt...</li>
+      <li><span>💻</span> Coding - dein dritter Punkt...</li>
+      <li><span>🚲</span> Fahrrad - dein vierter Punkt...</li>
+      <li><span>🎵</span> Musik - dein fünfter Punkt...</li>
+    </ul>
   </div>
-  <span id="rollerLabel">↑ Klick zum Öffnen</span>
+
+  <button class="rollo-button" aria-expanded="false" aria-controls="socialContent" id="btnSocial">
+    💬 Social & Kontakt
+  </button>
+  <div class="rollo-content" id="socialContent" role="region" aria-labelledby="btnSocial">
+    <ul>
+      <li>Discord: bm08</li>
+      <li>Signal: benni_08.20</li>
+      <li>WhatsApp: &lt;frei&gt;</li>
+    </ul>
+  </div>
+
+  <button class="rollo-button" aria-expanded="false" aria-controls="shareContent" id="btnShare">
+    🔥 Dinge teilen
+  </button>
+  <div class="rollo-content" id="shareContent" role="region" aria-labelledby="btnShare">
+    <ul>
+      <li>🚀 Cooles Tutorial: https://example.com/tutorial</li>
+      <li>🎧 Lieblings-Playlist: https://example.com/playlist</li>
+      <li>📚 Buch: „Tech Hacks für Anfänger“</li>
+      <li>🛠️ Tools: Code-Editor XYZ</li>
+      <li>🔥 Projekt: Benni.info</li>
+    </ul>
+  </div>
 </div>
 
 <script>
-  const rollerBar = document.getElementById('rollerBar');
-  const contentWrapper = document.getElementById('contentWrapper');
-  const rollerLabel = document.getElementById('rollerLabel');
+  const buttons = document.querySelectorAll('.rollo-button');
 
-  rollerBar.addEventListener('click', () => {
-    rollerBar.classList.toggle('expanded');
-    const expanded = rollerBar.classList.contains('expanded');
-    rollerBar.setAttribute('aria-expanded', expanded);
-    if(expanded){
-      rollerLabel.textContent = '↓ Klick zum Schließen';
-    } else {
-      rollerLabel.textContent = '↑ Klick zum Öffnen';
-    }
-  });
-
-  // Accessibility: Enter und Space zum toggeln
-  rollerBar.addEventListener('keydown', e => {
-    if(e.key === 'Enter' || e.key === ' '){
-      e.preventDefault();
-      rollerBar.click();
-    }
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      
+      // Erst alle zu (close all)
+      buttons.forEach(b => {
+        b.setAttribute('aria-expanded', 'false');
+        b.classList.remove('active');
+        document.getElementById(b.getAttribute('aria-controls')).classList.remove('open');
+      });
+      
+      // Wenn vorher zu war, dann jetzt öffnen, sonst bleibt alles zu
+      if (!expanded) {
+        btn.setAttribute('aria-expanded', 'true');
+        btn.classList.add('active');
+        document.getElementById(btn.getAttribute('aria-controls')).classList.add('open');
+      }
+    });
   });
 </script>
 
