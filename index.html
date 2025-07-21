@@ -178,6 +178,7 @@
 <section>
   <button id="openHobbies">Hobbies & Projekte zeigen</button>
   <button id="openSocial">Social & Kontakt zeigen</button>
+  <button id="openShare">Dinge teilen</button>
 </section>
 
 <!-- Modal Hobbies -->
@@ -208,11 +209,28 @@
   </div>
 </div>
 
+<!-- Modal Share -->
+<div id="modalShare" class="modal" role="dialog" aria-modal="true" aria-labelledby="shareTitle">
+  <div class="modal-content">
+    <button class="close-btn" aria-label="Schließen">&times;</button>
+    <h3 id="shareTitle">Dinge, die ich teilen will</h3>
+    <ul>
+      <li>🚀 Cooles Tutorial: https://example.com/tutorial</li>
+      <li>🎧 Meine Lieblings-Playlist: https://example.com/playlist</li>
+      <li>📚 Spannendes Buch: „Tech Hacks für Anfänger“</li>
+      <li>🛠️ Nützliche Tools: Code-Editor XYZ, Grafiktool ABC</li>
+      <li>🔥 Mein aktuelles Projekt: Benni.info</li>
+    </ul>
+  </div>
+</div>
+
 <script>
   const openHobbiesBtn = document.getElementById('openHobbies');
   const openSocialBtn = document.getElementById('openSocial');
+  const openShareBtn = document.getElementById('openShare');
   const modalHobbies = document.getElementById('modalHobbies');
   const modalSocial = document.getElementById('modalSocial');
+  const modalShare = document.getElementById('modalShare');
 
   function openModal(modal) {
     modal.classList.add('active');
@@ -230,12 +248,13 @@
 
   openHobbiesBtn.addEventListener('click', () => openModal(modalHobbies));
   openSocialBtn.addEventListener('click', () => openModal(modalSocial));
+  openShareBtn.addEventListener('click', () => openModal(modalShare));
 
   document.querySelectorAll('.close-btn').forEach(btn => {
     btn.addEventListener('click', e => closeModal(e.target.closest('.modal')));
   });
 
-  [modalHobbies, modalSocial].forEach(modal => {
+  [modalHobbies, modalSocial, modalShare].forEach(modal => {
     modal.addEventListener('click', e => {
       if (e.target === modal) {
         closeModal(modal);
@@ -247,6 +266,7 @@
     if (e.key === "Escape") {
       closeModal(modalHobbies);
       closeModal(modalSocial);
+      closeModal(modalShare);
     }
   });
 </script>
