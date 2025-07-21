@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+´<!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8" />
@@ -70,8 +70,41 @@
     background: #0f0f1d;
     outline: none;
   }
-  .emoji {
-    font-size: 1.5rem;
+  /* Social Section */
+  .social-container {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+  .social-link, .social-text {
+    padding: 0.8rem 1.5rem;
+    border-radius: 12px;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 1.1rem;
+    white-space: nowrap;
+    text-decoration: none;
+    box-shadow: 0 0 10px;
+    cursor: pointer;
+    color: white;
+  }
+  .discord {
+    background: #7289da;
+    box-shadow: 0 0 10px #7289da;
+  }
+  .signal {
+    background: #3a76f0;
+    box-shadow: 0 0 10px #3a76f0;
+  }
+  .whatsapp {
+    background: #25D366;
+    box-shadow: 0 0 10px #25D366;
+    cursor: default;
   }
 </style>
 </head>
@@ -85,13 +118,29 @@
 <section>
   <h2>Hobbies & Projekte</h2>
   <ul>
-    <li><span class="emoji">🎹</span><input type="text" placeholder="Klavier - dein erster Punkt..." /></li>
-    <li><span class="emoji">✈️</span><input type="text" placeholder="Flugzeuge - dein zweiter Punkt..." /></li>
-    <li><span class="emoji">💻</span><input type="text" placeholder="Coding - dein dritter Punkt..." /></li>
-    <li><span class="emoji">🚲</span><input type="text" placeholder="Fahrrad - dein vierter Punkt..." /></li>
-    <li><span class="emoji">🎵</span><input type="text" placeholder="Musik - dein fünfter Punkt..." /></li>
+    <li><span>🎹</span><input type="text" placeholder="Klavier - dein erster Punkt..." /></li>
+    <li><span>✈️</span><input type="text" placeholder="Flugzeuge - dein zweiter Punkt..." /></li>
+    <li><span>💻</span><input type="text" placeholder="Coding - dein dritter Punkt..." /></li>
+    <li><span>🚲</span><input type="text" placeholder="Fahrrad - dein vierter Punkt..." /></li>
+    <li><span>🎵</span><input type="text" placeholder="Musik - dein fünfter Punkt..." /></li>
   </ul>
+</section>
+
+<section>
+  <h2>Social & Kontakt</h2>
+  <div class="social-container">
+    <a href="https://discord.com/users/bm08" target="_blank" class="social-link discord">
+      <span>💬</span> Discord: bm08
+    </a>
+    <a href="sms:+49XXXXXXXXXX" target="_blank" class="social-link signal">
+      <span>📲</span> Signal: benni_08.20
+    </a>
+    <div class="social-text whatsapp">
+      <span>📱</span> WhatsApp: &lt;frei&gt;
+    </div>
+  </div>
 </section>
 
 </body>
 </html>
+
