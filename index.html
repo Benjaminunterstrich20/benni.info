@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Benni.info – Einzelne Rollo-Balken</title>
+<title>Benni.info – Balken nebeneinander mit Rollos</title>
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -46,13 +46,23 @@
     max-width: 600px;
   }
 
-  /* Container für Balken */
-  #balkenContainer {
+  /* Container Balken-Reihe */
+  #balkenRow {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
     width: 100%;
-    max-width: 700px;
+    max-width: 900px;
+    margin-bottom: 1rem;
   }
 
-  /* Einzelner Balken (Button) */
+  /* Einzelner Balken-Container (für Balken + Inhalt) */
+  .rollo-container {
+    flex: 1;
+    min-width: 200px;
+  }
+
+  /* Balken-Button */
   .rollo-button {
     width: 100%;
     background: #795548;
@@ -63,30 +73,30 @@
     font-size: 1.2rem;
     font-weight: bold;
     cursor: pointer;
-    text-align: left;
-    position: relative;
+    text-align: center;
     user-select: none;
     box-shadow: 0 3px 6px rgb(0 0 0 / 0.15);
     display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 0.8rem;
+    gap: 0.5rem;
+    position: relative;
   }
   .rollo-button:hover {
     background: #5d4037;
   }
-  /* Pfeil nach rechts/oben für toggle */
   .rollo-button::after {
-    content: "▶";
+    content: "▼";
     position: absolute;
-    right: 1.2rem;
+    right: 15px;
     font-size: 1.1rem;
     transition: transform 0.3s ease;
   }
   .rollo-button.active::after {
-    transform: rotate(90deg);
+    transform: rotate(180deg);
   }
 
-  /* Der ausklappbare Inhalt */
+  /* Ausklappbarer Inhalt */
   .rollo-content {
     max-height: 0;
     overflow: hidden;
@@ -96,14 +106,14 @@
     border-radius: 0 0 8px 8px;
     color: #3e342b;
     box-shadow: 0 0 10px rgb(0 0 0 / 0.1);
-    transition: max-height 0.4s ease;
+    transition: max-height 0.4s ease, padding 0.4s ease;
     padding: 0 1.5rem;
   }
   .rollo-content.open {
+    max-height: 300px;
     padding: 1rem 1.5rem;
-    max-height: 400px; /* genug Platz für den Inhalt */
   }
-  /* Listen */
+
   ul {
     list-style: none;
     padding-left: 0;
@@ -119,6 +129,17 @@
   li span {
     font-size: 1.3rem;
   }
+
+  /* Responsive für kleine Bildschirme */
+  @media (max-width: 650px) {
+    #balkenRow {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .rollo-container {
+      min-width: auto;
+    }
+  }
 </style>
 </head>
 <body>
@@ -128,42 +149,43 @@
   <p>Der Typ, der mehr fliegt als läuft, mehr tippt als redet und mehr rockt als chillt. Willkommen in meiner digitalen Welt — wo Tasten klirren, Motoren brummen und Ideen abheben.</p>
 </header>
 
-<div id="balkenContainer">
-  <button class="rollo-button" aria-expanded="false" aria-controls="hobbiesContent" id="btnHobbies">
-    🎹 Hobbies & Projekte
-  </button>
-  <div class="rollo-content" id="hobbiesContent" role="region" aria-labelledby="btnHobbies">
-    <ul>
-      <li><span>🎹</span> Klavier - dein erster Punkt...</li>
-      <li><span>✈️</span> Flugzeuge - dein zweiter Punkt...</li>
-      <li><span>💻</span> Coding - dein dritter Punkt...</li>
-      <li><span>🚲</span> Fahrrad - dein vierter Punkt...</li>
-      <li><span>🎵</span> Musik - dein fünfter Punkt...</li>
-    </ul>
+<div id="balkenRow">
+  <div class="rollo-container">
+    <button class="rollo-button" aria-expanded="false" aria-controls="hobbiesContent" id="btnHobbies">
+      ✈️ Hobbies & Projekte
+    </button>
+    <div class="rollo-content" id="hobbiesContent" role="region" aria-labelledby="btnHobbies">
+      <ul>
+        <li><span>✈️</span> Flugzeuge - dein zweiter Punkt...</li>
+        <li><span>💻</span> Coding - dein dritter Punkt...</li>
+        <li><span>🎵</span> Musik - dein fünfter Punkt...</li>
+      </ul>
+    </div>
   </div>
 
-  <button class="rollo-button" aria-expanded="false" aria-controls="socialContent" id="btnSocial">
-    💬 Social & Kontakt
-  </button>
-  <div class="rollo-content" id="socialContent" role="region" aria-labelledby="btnSocial">
-    <ul>
-      <li>Discord: bm08</li>
-      <li>Signal: benni_08.20</li>
-      <li>WhatsApp: &lt;frei&gt;</li>
-    </ul>
+  <div class="rollo-container">
+    <button class="rollo-button" aria-expanded="false" aria-controls="socialContent" id="btnSocial">
+      💬 Social & Kontakt
+    </button>
+    <div class="rollo-content" id="socialContent" role="region" aria-labelledby="btnSocial">
+      <ul>
+        <li>Discord: bm08</li>
+        <li>Signal: benni_08.20</li>
+        <li>WhatsApp: &lt;frei&gt;</li>
+      </ul>
+    </div>
   </div>
 
-  <button class="rollo-button" aria-expanded="false" aria-controls="shareContent" id="btnShare">
-    🔥 Dinge teilen
-  </button>
-  <div class="rollo-content" id="shareContent" role="region" aria-labelledby="btnShare">
-    <ul>
-      <li>🚀 Cooles Tutorial: https://example.com/tutorial</li>
-      <li>🎧 Lieblings-Playlist: https://example.com/playlist</li>
-      <li>📚 Buch: „Tech Hacks für Anfänger“</li>
-      <li>🛠️ Tools: Code-Editor XYZ</li>
-      <li>🔥 Projekt: Benni.info</li>
-    </ul>
+  <div class="rollo-container">
+    <button class="rollo-button" aria-expanded="false" aria-controls="shareContent" id="btnShare">
+      🔥 Dinge teilen
+    </button>
+    <div class="rollo-content" id="shareContent" role="region" aria-labelledby="btnShare">
+      <ul>
+        <li>🎧 Playlist: <a href="https://open.spotify.com/playlist/6JqdsasFUKIEApSu1bKRsD?si=d2e1c82cff944667" target="_blank" rel="noopener noreferrer">Benni's Spotify Playlist</a></li>
+        <li>📚 Buch: Shelter (U. Poznanski)</li>
+      </ul>
+    </div>
   </div>
 </div>
 
@@ -174,14 +196,14 @@
     btn.addEventListener('click', () => {
       const expanded = btn.getAttribute('aria-expanded') === 'true';
       
-      // Erst alle zu (close all)
+      // Alle schließen
       buttons.forEach(b => {
         b.setAttribute('aria-expanded', 'false');
         b.classList.remove('active');
         document.getElementById(b.getAttribute('aria-controls')).classList.remove('open');
       });
       
-      // Wenn vorher zu war, dann jetzt öffnen, sonst bleibt alles zu
+      // Falls vorher zu, jetzt öffnen
       if (!expanded) {
         btn.setAttribute('aria-expanded', 'true');
         btn.classList.add('active');
