@@ -24,12 +24,13 @@
       );
     color: #121212;
     margin: 0;
-    padding: 2rem 1rem;
+    padding: 2rem 1rem 4rem;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
+
   header {
     text-align: center;
     margin-bottom: 2rem;
@@ -46,7 +47,6 @@
     max-width: 600px;
   }
 
-  /* Container Balken-Reihe */
   #balkenRow {
     display: flex;
     justify-content: center;
@@ -56,13 +56,11 @@
     margin-bottom: 1rem;
   }
 
-  /* Einzelner Balken-Container (für Balken + Inhalt) */
   .rollo-container {
     flex: 1;
     min-width: 200px;
   }
 
-  /* Balken-Button */
   .rollo-button {
     width: 100%;
     background: #795548;
@@ -96,7 +94,6 @@
     transform: rotate(180deg);
   }
 
-  /* Ausklappbarer Inhalt */
   .rollo-content {
     max-height: 0;
     overflow: hidden;
@@ -130,7 +127,13 @@
     font-size: 1.3rem;
   }
 
-  /* Responsive für kleine Bildschirme */
+  footer {
+    margin-top: auto;
+    font-size: 0.9rem;
+    color: #666;
+    padding-top: 2rem;
+  }
+
   @media (max-width: 650px) {
     #balkenRow {
       flex-direction: column;
@@ -156,9 +159,8 @@
     </button>
     <div class="rollo-content" id="hobbiesContent" role="region" aria-labelledby="btnHobbies">
       <ul>
-        <li><span>✈️</span> Flugzeuge - dein zweiter Punkt...</li>
-        <li><span>💻</span> Coding - dein dritter Punkt...</li>
-        <li><span>🎵</span> Musik - dein fünfter Punkt...</li>
+        <li><span>✈️</span> Flugzeuge</li>
+        <li><span>🎵</span> Musik</li>
       </ul>
     </div>
   </div>
@@ -182,28 +184,27 @@
     </button>
     <div class="rollo-content" id="shareContent" role="region" aria-labelledby="btnShare">
       <ul>
-        <li>🎧 Playlist: <a href="https://open.spotify.com/playlist/6JqdsasFUKIEApSu1bKRsD?si=d2e1c82cff944667" target="_blank" rel="noopener noreferrer">Benni's Spotify Playlist</a></li>
-        <li>📚 Buch: Shelter (U. Poznanski)</li>
+        <li>🎧 <a href="https://open.spotify.com/playlist/6JqdsasFUKIEApSu1bKRsD?si=d2e1c82cff944667" target="_blank" rel="noopener noreferrer">Meine Spotify-Playlist</a></li>
+        <li>📚 Shelter (U. Poznanski)</li>
+        <li>💻 <a href="https://letzchat-school.onrender.com" target="_blank" rel="noopener noreferrer">LetzChat (GhostScript)</a></li>
+        <li>🛫 Videospiel: Aerofly</li>
       </ul>
     </div>
   </div>
 </div>
 
+<footer>© Benni 2025</footer>
+
 <script>
   const buttons = document.querySelectorAll('.rollo-button');
-
   buttons.forEach(btn => {
     btn.addEventListener('click', () => {
       const expanded = btn.getAttribute('aria-expanded') === 'true';
-      
-      // Alle schließen
       buttons.forEach(b => {
         b.setAttribute('aria-expanded', 'false');
         b.classList.remove('active');
         document.getElementById(b.getAttribute('aria-controls')).classList.remove('open');
       });
-      
-      // Falls vorher zu, jetzt öffnen
       if (!expanded) {
         btn.setAttribute('aria-expanded', 'true');
         btn.classList.add('active');
