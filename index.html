@@ -40,24 +40,22 @@
       transition: background 0.4s, color 0.4s;
     }
 
-    .startscreen {
-      position: fixed;
-      inset: 0;
-      background: linear-gradient(to bottom, #222, #000);
-      color: white;
+    .main-content {
+      display: none;
+      padding: 2rem 1rem 4rem;
       display: flex;
       flex-direction: column;
       align-items: center;
+      min-height: 100vh;
+    }
+
+    .start-button {
+      display: flex;
       justify-content: center;
-      z-index: 9999;
+      padding: 3rem 1rem 0;
     }
 
-    .startscreen h1 {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-    }
-
-    .startscreen button {
+    .start-button button {
       font-size: 1.2rem;
       padding: 0.8rem 2rem;
       border: none;
@@ -68,17 +66,8 @@
       transition: 0.3s ease;
     }
 
-    .startscreen button:hover {
+    .start-button button:hover {
       background: #00a043;
-    }
-
-    .main-content {
-      display: none;
-      padding: 2rem 1rem 4rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
     }
 
     header {
@@ -191,9 +180,9 @@
   </style>
 </head>
 <body>
-  <div class="startscreen" id="startscreen">
-    <h1>Benni.info</h1>
-    <button onclick="startSite()">Start</button>
+
+  <div class="start-button">
+    <button onclick="startSite()">🚀 Start</button>
   </div>
 
   <div class="main-content" id="mainContent">
@@ -248,7 +237,7 @@
 
   <script>
     function startSite() {
-      document.getElementById('startscreen').style.display = 'none';
+      document.querySelector('.start-button').style.display = 'none';
       document.getElementById('mainContent').style.display = 'flex';
     }
 
