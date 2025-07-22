@@ -29,12 +29,12 @@
       .rollo-button { background: #333; color: var(--text-dark); }
       .rollo-content { background: var(--card-dark); border-color: #444; color: #eee; }
       footer { color: #aaa; }
-      #textInput {
+      #textSave textarea {
         background: #444;
         color: #eee;
         border-color: #666;
       }
-      #saveBtn {
+      #textSave button {
         background: #00a043;
         color: white;
       }
@@ -99,11 +99,6 @@
       font-weight: bold;
       cursor: pointer;
       position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      user-select: none;
     }
 
     .rollo-button::after {
@@ -111,7 +106,6 @@
       position: absolute;
       right: 1rem;
       transition: transform 0.3s ease;
-      font-size: 1.2rem;
     }
 
     .rollo-button.active::after {
@@ -130,14 +124,13 @@
     }
 
     .rollo-content.open {
-      max-height: 320px;
+      max-height: 300px;
       padding: 1rem 1.5rem;
     }
 
     ul {
       list-style: none;
       padding: 0;
-      margin: 0;
     }
 
     li {
@@ -152,7 +145,13 @@
       text-decoration: underline;
     }
 
-    /* Textfeld Styles */
+    #textSave {
+      margin-top: 2rem;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+
     #textSave textarea {
       width: 100%;
       height: 150px;
@@ -177,8 +176,6 @@
       border-radius: 5px;
       cursor: pointer;
       transition: background 0.3s ease;
-      display: block;
-      width: 100%;
     }
 
     #textSave button:hover {
@@ -190,8 +187,6 @@
       font-size: 0.9rem;
       color: #666;
       padding-top: 2rem;
-      text-align: center;
-      width: 100%;
     }
 
     @media (max-width: 600px) {
@@ -204,9 +199,6 @@
       }
       .rollo-button {
         font-size: 1rem;
-      }
-      .rollo-container {
-        min-width: auto;
       }
     }
   </style>
@@ -258,17 +250,13 @@
           </ul>
         </div>
       </div>
+    </div>
 
-      <!-- Textfeld als Rollo -->
-      <div class="rollo-container">
-        <button class="rollo-button" aria-expanded="false" aria-controls="textSaveContent" id="btnTextSave">
-          📝 Text speichern als Datei
-        </button>
-        <div class="rollo-content" id="textSaveContent">
-          <textarea id="textInput" placeholder="Schreib hier deinen Text..."></textarea>
-          <button id="saveBtn">Als .txt speichern</button>
-        </div>
-      </div>
+    <!-- Textspeicher-Feature -->
+    <div id="textSave">
+      <h2>📝 Text als Datei speichern</h2>
+      <textarea id="textInput" placeholder="Schreib hier deinen Text..."></textarea>
+      <button id="saveBtn">Als .txt speichern</button>
     </div>
 
     <footer>© Benni 2025</footer>
