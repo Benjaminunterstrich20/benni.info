@@ -1,113 +1,217 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>benni.info</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background-image: url('https://www.transparenttextures.com/patterns/notebook.png');
-      background-color: #fdfdfd;
-      color: #111;
-    }
-    header {
-      text-align: center;
-      padding: 2rem;
-      font-size: 2rem;
-    }
-    .section-bar {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin-bottom: 1rem;
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Benni.info – Balken nebeneinander mit Rollos</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: 
+      repeating-linear-gradient(
+        0deg, 
+        #fdfcf9 0, 
+        #fdfcf9 29px, 
+        #c7c1b7 30px, 
+        #fdfcf9 31px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        #f5f0e6 0,
+        #f5f0e6 39px,
+        #ded7ca 40px,
+        #f5f0e6 41px
+      );
+    color: #121212;
+    margin: 0;
+    padding: 2rem 1rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  header h1 {
+    font-size: 3rem;
+    margin: 0;
+    color: #2e2a23;
+  }
+  header p {
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+    color: #4a463f;
+    max-width: 600px;
+  }
+
+  /* Container Balken-Reihe */
+  #balkenRow {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+    max-width: 900px;
+    margin-bottom: 1rem;
+  }
+
+  /* Einzelner Balken-Container (für Balken + Inhalt) */
+  .rollo-container {
+    flex: 1;
+    min-width: 200px;
+  }
+
+  /* Balken-Button */
+  .rollo-button {
+    width: 100%;
+    background: #795548;
+    color: #fdfcf9;
+    border: none;
+    border-radius: 8px 8px 0 0;
+    padding: 1rem 1.5rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    user-select: none;
+    box-shadow: 0 3px 6px rgb(0 0 0 / 0.15);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+  }
+  .rollo-button:hover {
+    background: #5d4037;
+  }
+  .rollo-button::after {
+    content: "▼";
+    position: absolute;
+    right: 15px;
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+  }
+  .rollo-button.active::after {
+    transform: rotate(180deg);
+  }
+
+  /* Ausklappbarer Inhalt */
+  .rollo-content {
+    max-height: 0;
+    overflow: hidden;
+    background: #fbf8f1;
+    border: 1px solid #dbd3c7;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    color: #3e342b;
+    box-shadow: 0 0 10px rgb(0 0 0 / 0.1);
+    transition: max-height 0.4s ease, padding 0.4s ease;
+    padding: 0 1.5rem;
+  }
+  .rollo-content.open {
+    max-height: 300px;
+    padding: 1rem 1.5rem;
+  }
+
+  ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+  li {
+    margin: 0.6rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 1rem;
+  }
+  li span {
+    font-size: 1.3rem;
+  }
+
+  /* Responsive für kleine Bildschirme */
+  @media (max-width: 650px) {
+    #balkenRow {
+      flex-direction: column;
+      gap: 1.5rem;
     }
     .rollo-container {
-      width: 100%;
-      max-width: 600px;
-      margin: 0 auto 1rem;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      overflow: hidden;
-      background: white;
+      min-width: auto;
     }
-    .rollo-button {
-      width: 100%;
-      padding: 1rem;
-      background-color: #eee;
-      border: none;
-      font-size: 1.2rem;
-      text-align: left;
-      cursor: pointer;
-    }
-    .rollo-content {
-      display: none;
-      padding: 1rem;
-    }
-    .rollo-container.active .rollo-content {
-      display: block;
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-    li {
-      padding: 0.5rem 0;
-    }
-    a {
-      color: #0066cc;
-      text-decoration: none;
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
-  <header>📘 benni.info</header>
 
-  <div class="section-bar">
-    <div class="rollo-container">
-      <button class="rollo-button" aria-expanded="false">🎯 Hobbys & Projekte</button>
-      <div class="rollo-content">
-        <ul>
-          <li>✈️ Flugzeuge</li>
-          <li>📱 Web & Coding</li>
-          <li>🎮 musik</li>
-        </ul>
-      </div>
-    </div>
+<header>
+  <h1>Benni</h1>
+  <p>Der Typ, der mehr fliegt als läuft, mehr tippt als redet und mehr rockt als chillt. Willkommen in meiner digitalen Welt — wo Tasten klirren, Motoren brummen und Ideen abheben.</p>
+</header>
 
-    <div class="rollo-container">
-      <button class="rollo-button" aria-expanded="false">📲 Social</button>
-      <div class="rollo-content">
-        <ul>
-          <li>💬 Discord: bm08</li>
-          <li>📞 Signal: benni_08.20</li>
-          <li>📱 WhatsApp: &lt;frei&gt;</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="rollo-container">
-      <button class="rollo-button" aria-expanded="false">🔥 Dinge teilen</button>
-      <div class="rollo-content">
-        <ul>
-          <li>🚀 Letzchat-School: <a href="https://letzchat-school.onrender.com" target="_blank" rel="noopener noreferrer">letzchat-school.onrender.com</a></li>
-          <li>🎧 Playlist: <a href="https://open.spotify.com/playlist/6JqdsasFUKIEApSu1bKRsD?si=d2e1c82cff944667" target="_blank" rel="noopener noreferrer">Benni's Spotify Playlist</a></li>
-          <li>📚 Buch: *Shelter* (U. Poznanski)</li>
-          <li>🛫 Spiel: *Aerofly FS*</li>
-        </ul>
-      </div>
+<div id="balkenRow">
+  <div class="rollo-container">
+    <button class="rollo-button" aria-expanded="false" aria-controls="hobbiesContent" id="btnHobbies">
+      ✈️ Hobbies & Projekte
+    </button>
+    <div class="rollo-content" id="hobbiesContent" role="region" aria-labelledby="btnHobbies">
+      <ul>
+        <li><span>✈️</span> Flugzeuge - dein zweiter Punkt...</li>
+        <li><span>💻</span> Coding - dein dritter Punkt...</li>
+        <li><span>🎵</span> Musik - dein fünfter Punkt...</li>
+      </ul>
     </div>
   </div>
 
-  <script>
-    const buttons = document.querySelectorAll('.rollo-button');
-    buttons.forEach(button => {
-      button.addEventListener('click', () => {
-        const container = button.parentElement;
-        container.classList.toggle('active');
+  <div class="rollo-container">
+    <button class="rollo-button" aria-expanded="false" aria-controls="socialContent" id="btnSocial">
+      💬 Social & Kontakt
+    </button>
+    <div class="rollo-content" id="socialContent" role="region" aria-labelledby="btnSocial">
+      <ul>
+        <li>Discord: bm08</li>
+        <li>Signal: benni_08.20</li>
+        <li>WhatsApp: &lt;frei&gt;</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="rollo-container">
+    <button class="rollo-button" aria-expanded="false" aria-controls="shareContent" id="btnShare">
+      🔥 Dinge teilen
+    </button>
+    <div class="rollo-content" id="shareContent" role="region" aria-labelledby="btnShare">
+      <ul>
+        <li>🎧 Playlist: <a href="https://open.spotify.com/playlist/6JqdsasFUKIEApSu1bKRsD?si=d2e1c82cff944667" target="_blank" rel="noopener noreferrer">Benni's Spotify Playlist</a></li>
+        <li>📚 Buch: Shelter (U. Poznanski)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  const buttons = document.querySelectorAll('.rollo-button');
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      
+      // Alle schließen
+      buttons.forEach(b => {
+        b.setAttribute('aria-expanded', 'false');
+        b.classList.remove('active');
+        document.getElementById(b.getAttribute('aria-controls')).classList.remove('open');
       });
+      
+      // Falls vorher zu, jetzt öffnen
+      if (!expanded) {
+        btn.setAttribute('aria-expanded', 'true');
+        btn.classList.add('active');
+        document.getElementById(btn.getAttribute('aria-controls')).classList.add('open');
+      }
     });
-  </script>
+  });
+</script>
+
 </body>
 </html>
