@@ -3,48 +3,80 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Benni.info – Balken nebeneinander mit Rollos</title>
+  <title>Benni.info</title>
   <style>
+    :root {
+      --bg-light: #fdfcf9;
+      --line-light: #c7c1b7;
+      --text-light: #121212;
+      --header-light: #2e2a23;
+      --card-light: #fbf8f1;
+
+      --bg-dark: #1e1e1e;
+      --line-dark: #333;
+      --text-dark: #f0f0f0;
+      --header-dark: #ffffff;
+      --card-dark: #2c2c2c;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body {
+        background: var(--bg-dark);
+        color: var(--text-dark);
+      }
+      header h1 {
+        color: var(--header-dark);
+      }
+      header p {
+        color: #ccc;
+      }
+      .rollo-button {
+        background: #333;
+        color: var(--text-dark);
+      }
+      .rollo-button:hover {
+        background: #444;
+      }
+      .rollo-content {
+        background: var(--card-dark);
+        border-color: #444;
+        color: #eee;
+      }
+      footer {
+        color: #aaa;
+      }
+    }
+
     body {
       font-family: Arial, sans-serif;
       background: 
-        repeating-linear-gradient(
-          0deg, 
-          #fdfcf9 0, 
-          #fdfcf9 29px, 
-          #c7c1b7 30px, 
-          #fdfcf9 31px
-        ),
-        repeating-linear-gradient(
-          90deg,
-          #f5f0e6 0,
-          #f5f0e6 39px,
-          #ded7ca 40px,
-          #f5f0e6 41px
-        );
-      color: #121212;
+        repeating-linear-gradient(0deg, var(--bg-light) 0, var(--bg-light) 29px, var(--line-light) 30px, var(--bg-light) 31px);
+      color: var(--text-light);
       margin: 0;
       padding: 2rem 1rem 4rem;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
+      transition: background 0.4s, color 0.4s;
     }
 
     header {
       text-align: center;
       margin-bottom: 2rem;
     }
+
     header h1 {
-      font-size: 3rem;
+      font-size: 2.5rem;
       margin: 0;
-      color: #2e2a23;
+      color: var(--header-light);
     }
+
     header p {
-      font-size: 1.2rem;
-      margin-top: 0.5rem;
+      font-size: 1.1rem;
       color: #4a463f;
       max-width: 600px;
+      margin: 0.5rem auto;
     }
 
     #balkenRow {
@@ -53,12 +85,12 @@
       gap: 1rem;
       width: 100%;
       max-width: 900px;
-      margin-bottom: 1rem;
+      flex-wrap: wrap;
     }
 
     .rollo-container {
       flex: 1;
-      min-width: 200px;
+      min-width: 250px;
     }
 
     .rollo-button {
@@ -67,29 +99,28 @@
       color: #fdfcf9;
       border: none;
       border-radius: 8px 8px 0 0;
-      padding: 1rem 1.5rem;
-      font-size: 1.2rem;
+      padding: 1rem;
+      font-size: 1.1rem;
       font-weight: bold;
       cursor: pointer;
       text-align: center;
       user-select: none;
-      box-shadow: 0 3px 6px rgb(0 0 0 / 0.15);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 0.5rem;
       position: relative;
+      box-shadow: 0 3px 6px rgb(0 0 0 / 0.15);
     }
+
     .rollo-button:hover {
       background: #5d4037;
     }
+
     .rollo-button::after {
       content: "▼";
       position: absolute;
-      right: 15px;
+      right: 1rem;
       font-size: 1.1rem;
       transition: transform 0.3s ease;
     }
+
     .rollo-button.active::after {
       transform: rotate(180deg);
     }
@@ -97,15 +128,15 @@
     .rollo-content {
       max-height: 0;
       overflow: hidden;
-      background: #fbf8f1;
+      background: var(--card-light);
       border: 1px solid #dbd3c7;
       border-top: none;
       border-radius: 0 0 8px 8px;
-      color: #3e342b;
       box-shadow: 0 0 10px rgb(0 0 0 / 0.1);
       transition: max-height 0.4s ease, padding 0.4s ease;
       padding: 0 1.5rem;
     }
+
     .rollo-content.open {
       max-height: 300px;
       padding: 1rem 1.5rem;
@@ -113,18 +144,24 @@
 
     ul {
       list-style: none;
-      padding-left: 0;
+      padding: 0;
       margin: 0;
     }
+
     li {
       margin: 0.6rem 0;
       display: flex;
       align-items: center;
       gap: 0.6rem;
-      font-size: 1rem;
     }
+
     li span {
       font-size: 1.3rem;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: underline;
     }
 
     footer {
@@ -134,19 +171,21 @@
       padding-top: 2rem;
     }
 
-    @media (max-width: 650px) {
-      #balkenRow {
-        flex-direction: column;
-        gap: 1.5rem;
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2rem;
       }
-      .rollo-container {
-        min-width: auto;
+      header p {
+        font-size: 1rem;
+        padding: 0 0.5rem;
+      }
+      .rollo-button {
+        font-size: 1rem;
       }
     }
   </style>
 </head>
 <body>
-
   <header>
     <h1>Benni</h1>
     <p>Der Typ, der mehr fliegt als läuft, mehr tippt als redet und mehr rockt als chillt. Willkommen in meiner digitalen Welt — wo Tasten klirren, Motoren brummen und Ideen abheben.</p>
@@ -157,11 +196,11 @@
       <button class="rollo-button" aria-expanded="false" aria-controls="hobbiesContent" id="btnHobbies">
         ✈️ Hobbies & Projekte
       </button>
-      <div class="rollo-content" id="hobbiesContent" role="region" aria-labelledby="btnHobbies">
+      <div class="rollo-content" id="hobbiesContent">
         <ul>
           <li><span>✈️</span> Flugzeuge</li>
           <li><span>🎵</span> Musik</li>
-          <li><span>💻</span> Projekt: <a href="https://letzchat-school.onrender.com" target="_blank" rel="noopener noreferrer">GhostScript (LetzChat)</a></li>
+          <li><span>💻</span> Projekt: <a href="https://letzchat-school.onrender.com" target="_blank">GhostScript</a></li>
         </ul>
       </div>
     </div>
@@ -170,7 +209,7 @@
       <button class="rollo-button" aria-expanded="false" aria-controls="socialContent" id="btnSocial">
         💬 Social & Kontakt
       </button>
-      <div class="rollo-content" id="socialContent" role="region" aria-labelledby="btnSocial">
+      <div class="rollo-content" id="socialContent">
         <ul>
           <li>Discord: bm08</li>
           <li>Signal: benni_08.20</li>
@@ -183,9 +222,9 @@
       <button class="rollo-button" aria-expanded="false" aria-controls="shareContent" id="btnShare">
         🔥 Dinge teilen
       </button>
-      <div class="rollo-content" id="shareContent" role="region" aria-labelledby="btnShare">
+      <div class="rollo-content" id="shareContent">
         <ul>
-          <li>🎧 <a href="https://open.spotify.com/playlist/6JqdsasFUKIEApSu1bKRsD?si=d2e1c82cff944667" target="_blank" rel="noopener noreferrer">Meine Spotify-Playlist</a></li>
+          <li>🎧 <a href="https://open.spotify.com/playlist/6JqdsasFUKIEApSu1bKRsD?si=d2e1c82cff944667" target="_blank">Meine Spotify-Playlist</a></li>
           <li>📚 Shelter (U. Poznanski)</li>
           <li>🛫 Videospiel: Aerofly</li>
         </ul>
@@ -213,6 +252,5 @@
       });
     });
   </script>
-
 </body>
 </html>
